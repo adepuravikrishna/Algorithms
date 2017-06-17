@@ -1,93 +1,142 @@
 
-public class BinaryTree {
-	Node root;
-	public void addNode(int key,String name)
+
+class Node {
+	int data;		
+	Node left,right;
+
+	Node(int value)
 	{
-		Node newNode= new Node(key,name);
-		if(root==null)
+     this.data = value;
+	}
+
+	public void insert(int value)
+	{
+		if(value<data)
 		{
-			root=newNode;
-		}else{
-			Node focusNode=root;
-			Node parent;
-			while(true)
+			if(left==null)
 			{
-				parent=focusNode;
-				if(key<focusNode.key)
-				{
-					focusNode= focusNode.leftChild;
-
-					if(focusNode==null)
-					{
-						parent.leftChild = newNode;
-						return;
-
-					}
-				}
-				else
-				{
-					focusNode= focusNode.leftChild;
-					if(focusNode==null)
-					{
-						parent.rightChild = newNode;
-						return;
-
-					}
-				}
+				left = new Node(value);
+			}else{
+				left.insert(value);
 			}
 		}
-
-
+		else{
+			if(right==null)
+			{
+				right=new Node(value);
+			}else{
+				right.insert(value);
+			}
+		}
+		
 	}
-	public void inOrderTraversal(Node focusNode)
+	public boolean find(int value)	
 	{
-		if(focusNode!=null)
+		if(value==data){
+			
+			return true;
+		}
+		else if(value<data)
 		{
-			inOrderTraversal(focusNode.leftChild);
-			System.out.println(focusNode);
-			inOrderTraversal(focusNode.rightChild);
+			if(left==null){
+				return false;
+				
+			}
+			else{
+				left.find(value);
+			}
+		}else{
+			if(right==null){
+				return false;
+				
+			}
+			else{
+				right.find(value);
+			}
+		}
+		return true;
+		
+	}
+	void printInorder(){
+		if(left!=null)
+		{
+			left.printInorder();
+		}
+		System.out.println(data);
+		if(right!=null)
+		{
+			right.printInorder();
 		}
 	}
-	public void preOrderTraversal(Node focusNode)
-	{
-		if(focusNode!=null)
-		{
-			System.out.println(focusNode);
-			preOrderTraversal(focusNode.leftChild);			
-			preOrderTraversal(focusNode.rightChild);
-		}
-	}
-	public static void main(String args[])
-	{
-		BinaryTree bt= new BinaryTree();
-		bt.addNode(54, "ravi");
-		bt.addNode(4, "sfg");
-		bt.addNode(5, "uyu");
-		bt.addNode(548, "hfd");
-		bt.addNode(754, "rgfd");
-		bt.preOrderTraversal(bt.root);
+	/* Given a binary tree, print out all of its root-to-leaf
+    paths, one per line. Uses a recursive helper to do the work.*/
+ void printPaths(Node node) 
+ {
+     int path[] = new int[1000];
+     printPathsRecur(node, path, 0);
+ }
 
-	}
-	public class Node{
-		int key;
-		String name;
+ /* Recursive helper function -- given a node, and an array containing
+    the path from the root node up to but not including this node,
+    print out all the root-leaf paths. */
+ void printPathsRecur(Node node, int path[], int pathLen) 
+ {
+     if (node == null)
+         return;
 
-		Node leftChild;
-		Node rightChild;
+     /* append this node to the path array */
+     path[pathLen] = node.data;
+     pathLen++;
 
-		Node(int key,String name)
-		{
-			this.key=key;
-			this.name=name;
+     /* it's a leaf, so print the path that led to here */
+     if (node.left == null && node.right == null)
+         printArray(path, pathLen);
+     else
+         { 
+         /* otherwise try both subtrees */
+         printPathsRecur(node.left, path, pathLen);
+         printPathsRecur(node.right, path, pathLen);
+     }
+ }
 
-		}
-		public String toString()
-		{
-			return name+ "  has a key "+ key;
+ /* Utility that prints out an array on a line */
+ void printArray(int ints[], int len) 
+ {
+     int i;
+     for (i = 0; i < len; i++) 
+         System.out.print(ints[i] + " ");
+     System.out.println("");
+ }
+	
+}
+public class BinaryTree {
+	
+ public static void main(String[] args){
+	 
+	 Node root = new Node(10);
+	 root.insert(3);
+	 root.insert(2);
+	 root.insert(9);
+	 root.insert(107);
+	 root.insert(130);
+	 root.insert(120);
+	 root.insert(1430);
+	// root.printInorder();
+	//System.out.println( root.find(120));
+	 root.printPaths(root);
+	 root.printInorder();
+	 
+	 
+ }
+  
+	
+	
+	
+	
+	
+	
 
-		}
 
-	}
+
 
 }
-
