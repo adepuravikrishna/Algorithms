@@ -122,10 +122,10 @@ public class BinaryTree {
 	 root.insert(120);
 	 root.insert(1430);
 	// root.printInorder();
-	//System.out.println( root.find(120));
-	 root.printPaths(root);
-	 root.printInorder();
-	 
+//	//System.out.println( root.find(120));
+//	 root.printPaths(root);
+//	 root.printInorder();
+//	 
 	 
  }
   

@@ -1,22 +1,45 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-class subset
-{  
-	  public static void main( String args[] )
-      {
-	String s1 = null,s2 = null;
- 
-    	 s1=args[0];
-    	 s2=args[1];
-     
-      int i=0;
-      Pattern p= Pattern.compile(s2);
-      Matcher m= p.matcher(s1);
-      while(m.find())
-      {
-    	 i++; 
-      }
-      System.out.println(i);
-      }
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+public class SubSet {
+    public static void main(String args[] ) throws Exception {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+        Set<Integer> s= new HashSet<Integer>();
+        s.add(1);
+        s.add(2);
+        s.add(3);
+        Set<Set<Integer>> sets = new HashSet<Set<Integer>>();
+        sets= powerSet(s);
+        for( Set<Integer> j:sets)
+        {
+        	for(Integer i:j)
+        	{
+        		System.out.println(i);
+        	}
+        	System.out.println("each set");
+        }
+      
+        
+        
+    
+    }
+     public static Set<Set<Integer>> powerSet(Set<Integer> originalSet) {
+        Set<Set<Integer>> sets = new HashSet<Set<Integer>>();
+        if (originalSet.isEmpty()) {
+            sets.add(new HashSet<Integer>());
+            return sets;
+        }
+        List<Integer> list = new ArrayList<Integer>(originalSet);
+        Integer head = list.get(0);
+        Set<Integer> rest = new HashSet<Integer>(list.subList(1, list.size()));
+        for (Set<Integer> set : powerSet(rest)) {
+            Set<Integer> newSet = new HashSet<Integer>();
+            newSet.add(head);
+            newSet.addAll(set);
+            sets.add(newSet);
+            sets.add(set);
+        }
+        return sets;
+    }
 }
